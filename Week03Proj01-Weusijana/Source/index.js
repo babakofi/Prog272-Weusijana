@@ -2,10 +2,12 @@
  * @author BabaKofi.Weusijana
  */
 
-function getNine() {
-	return 9;
-}
+var numberGetter = {
+	getNine : function() {
+		return 9;
+	},
 
-function getEight(){
-	return 8;
-}
+	getEight : function() {
+		return 8;
+	}
+}; 
