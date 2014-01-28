@@ -24,25 +24,25 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
             expect(exist).toBe(true);
         }
     });
-    it("expects 1 mile to be 0.621371 kilometers", function() {
+    it("expects 1 mile to be 1.60934 kilometers", function() {
         var actual = Converter.milesToKilometers(1);
-        expect(actual).toBeCloseTo(0.621371);
+        expect(actual).toBeCloseTo(1.60934);
     });
-    it("expects -1 mile to be -0.621371 kilometers", function() {
+    it("expects -1 mile to be -1.60934 kilometers", function() {
         var actual = Converter.milesToKilometers(-1);
-        expect(actual).toBeCloseTo(-0.621371);
+        expect(actual).toBeCloseTo(-1.60934);
     });
-    it("expects 1.5 mile to be 2.414016 kilometers", function() {
+    it("expects 1.5 mile to be 2.41402 kilometers", function() {
         var actual = Converter.milesToKilometers(1.5);
-        expect(actual).toBeCloseTo(2.414016);
+        expect(actual).toBeCloseTo(2.41402);
     });
-    it("expects 3 miles to be 4.82803 kilometers", function() {
-        var actual = Converter.milesToKilometers(3);
-        expect(actual).toBeCloseTo(4.82803);
+    it("expects 0.621371 miles to be 1 kilometers", function() {
+        var actual = Converter.milesToKilometers(0.621371);
+        expect(actual).toBeCloseTo(1);
     });
-    it("expects 30 miles to be 4.828030 kilometers", function() {
+    it("expects 30 miles to be 48.2803 kilometers", function() {
         var actual = Converter.milesToKilometers(30);
-        expect(actual).toBeCloseTo(4.828030);
+        expect(actual).toBeCloseTo(48.2803);
     });
     it("expects no input to be undefined output", function() {
         var actual = Converter.milesToKilometers();
@@ -60,7 +60,7 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
         var actual = Converter.milesToKilometers("not a number");
         expect(actual).toBe(undefined);
     });
-    
+
     it("expects Converter.fahrenheitToCelsius to exist and be a function", function() {
         var exist = false;
         try {
@@ -75,7 +75,7 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
         }
     });
     it("expects 32 f to be 0.0 c", function() {
-        var actual = Converter.fahrenheitToCelsius(1);
+        var actual = Converter.fahrenheitToCelsius(32);
         expect(actual).toBeCloseTo(0.0);
     });
     it("expects -1 f to be -18.3333 c", function() {
@@ -91,7 +91,7 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
         expect(actual).toBeCloseTo(-16.1111);
     });
     it("expects 212 f to be 100 c", function() {
-        var actual = Converter.fahrenheitToCelsius(30);
+        var actual = Converter.fahrenheitToCelsius(212);
         expect(actual).toBeCloseTo(100);
     });
     it("expects no input to be undefined output", function() {
@@ -110,7 +110,7 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
         var actual = Converter.fahrenheitToCelsius("not a number");
         expect(actual).toBe(undefined);
     });
-    
+
     it("expects Converter.sqrt to exist and be a function", function() {
         var exist = false;
         try {
@@ -128,9 +128,9 @@ describe("Prog272 Jasmine Test Suite for Converter", function() {"use strict";
         var actual = Converter.sqrt(1);
         expect(actual).toBe(1);
     });
-    it("expects sqrt(-1) to be NaN", function() {
+    it("expects sqrt(-1) to be undefined", function() {
         var actual = Converter.sqrt(-1);
-        expect(actual).toBe(NaN);
+        expect(actual).toBe(undefined);
     });
     it("expects sqrt(1.5) to be 1.224744871", function() {
         var actual = Converter.sqrt(1.5);
