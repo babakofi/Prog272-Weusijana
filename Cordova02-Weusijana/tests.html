@@ -18,7 +18,6 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/vendor/modernizr-2.7.1.min.js"></script>
 		<script src="js/vendor/jquery-1.10.2.min.js"></script>
-		<script src="js/main.js"></script>
 
 		<link rel="stylesheet" href="js/vendor/jasmine/jasmine.css">
 		<script src="js/vendor/jasmine/jasmine.js"></script>
@@ -31,55 +30,54 @@
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<!-- Add your site or application content here -->
-		<form>
-			<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
-				<caption>
+		<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+			<caption>
+				<br>
+			</caption>
+			<h1>Converter</h1>
+			<tbody>
+				<tr>
+					<td style="vertical-align: top;">
+					<input id="f_input" type="text">
+					<label>Fahrenheit</label></td>
+					<td style="vertical-align: top;">
+					<button id="fc_button">
+						is equal
+						to
+					</button></td>
+					<td style="vertical-align: top;"><span id="c_output">&nbsp;</span><label>Celsius.</label>
 					<br>
-				</caption>
-				<h1>Converter</h1>
-				<tbody>
-					<tr>
-						<td style="vertical-align: top;">
-						<input name="f_input">
-						<label>Fahrenheit</label></td>
-						<td style="vertical-align: top;">
-						<button id="fc_button">
-							is equal
-							to
-						</button></td>
-						<td style="vertical-align: top;"><span id="c_output">&nbsp;</span><label>Celsius.</label>
-						<br>
-						</td>
-					</tr>
-					<tr>
-						<td style="vertical-align: top;">
-						<input name="m_input">
-						<label>Miles</label></td>
-						<td style="vertical-align: top;">
-						<button id="mk_button">
-							is equal
-							to
-						</button></td>
-						<td style="vertical-align: top;"><span id="k_output">&nbsp;</span><label>Kilometers.</label>
-						<br>
-						</td>
-					</tr>
-					<tr>
-						<td style="vertical-align: top;"><label>The square root of</label>
-						<input name="x_input">
-						</td>
-						<td style="vertical-align: top;">
-						<button id="sqrt_button">
-							is equal
-							to
-						</button></td>
-						<td style="vertical-align: top;"><span id="sqrtx_output">&nbsp;</span>.
-						<br>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">
+					<input id="m_input">
+					<label>Miles</label></td>
+					<td style="vertical-align: top;">
+					<button id="mk_button">
+						is equal
+						to
+					</button></td>
+					<td style="vertical-align: top;"><span id="k_output">&nbsp;</span><label>Kilometers.</label>
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;"><label>The square root of</label>
+					<input id="x_input">
+					</td>
+					<td style="vertical-align: top;">
+					<button id="sqrt_button">
+						is equal
+						to
+					</button></td>
+					<td style="vertical-align: top;"><span id="sqrtx_output">&nbsp;</span>.
+					<br>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
+		<script src="js/main.js"></script>
 	</body>
 </html>
