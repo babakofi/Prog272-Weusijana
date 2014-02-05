@@ -4,24 +4,32 @@
 
 function InfoMan() {
 
-	var that = this;
-	// var feetInOneMile = 5280;
+    var that = this;
+    // var feetInOneMile = 5280;
 
-	var loadParagraphHandler = function(event) {
-		var idString = $(this).attr("id");
-		if (idString) {
-			var numberString = idString.slice(-2);
-			if (numberString) {
-				that.loadParagraph(numberString);
-			}
-		}
-	};
+    if (!window.console) {
+        window.console = {
+            log : function(input) {
+                input = undefined;
+            }
+        };
+    }
 
-	this.loadParagraph = function(numberString) {
-		$("#div" + numberString).load("Sources.html #paragraph" + numberString);
-	};
+    var loadParagraphHandler = function(event) {
+        var idString = $(this).attr("id");
+        if (idString) {
+            var numberString = idString.slice(-2);
+            if (numberString) {
+                that.loadParagraph(numberString);
+            }
+        }
+    };
 
-	$("button").click(loadParagraphHandler);
+    this.loadParagraph = function(numberString) {
+        $("#div" + numberString).load("Sources.html #paragraph" + numberString);
+    };
 
-	console.log("InfoMan created and inititalized");
+    $("button").click(loadParagraphHandler);
+
+    console.log("InfoMan created and inititalized");
 }
