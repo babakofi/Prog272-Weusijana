@@ -3,13 +3,12 @@
  */
 
 describe("Test InfoMan", function() {
-
     var infoMan = new InfoMan();
 
     beforeEach(function(done) {
         setTimeout(function() {
-            infoMan.loadParagraph('02');
-            done();
+            infoMan.loadParagraph('02', done);
+            // done();
         }, 400);
     });
 

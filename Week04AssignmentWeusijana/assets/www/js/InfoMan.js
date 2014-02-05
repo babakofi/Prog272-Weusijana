@@ -25,11 +25,11 @@ function InfoMan() {
         }
     };
 
-    this.loadParagraph = function(numberString) {
-        $("#div" + numberString).load("Sources.html #paragraph" + numberString);
+    this.loadParagraph = function(numberString, completionHandler) {
+        $("#div" + numberString).load("Sources.html #paragraph" + numberString, completionHandler);
     };
 
     $("button").click(loadParagraphHandler);
 
-    console.log("InfoMan created and inititalized");
+    console.log("an InfoMan has been created and inititalized");
 }
