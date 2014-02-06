@@ -22,4 +22,15 @@ describe("Test InfoMan", function() {
         done();
     });
 
+    it("expects jsonParagraph('03') to have loaded content into #div03", function() {
+        var checkResult = function(data, textStatus, jqXHR) {
+            console.log('data', data);
+            console.log('textStatus', textStatus);
+            console.log('jqXHR', jqXHR);
+            expect(data.title).toBeDefined();
+            expect(data.content).toBeDefined();
+        };
+        infoMan.jsonParagraph('03', checkResult);
+    });
+
 });
