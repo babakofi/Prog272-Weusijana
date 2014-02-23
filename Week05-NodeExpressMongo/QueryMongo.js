@@ -44,22 +44,25 @@ var QueryMongo = (function() {
         MongoClient.connect(url01, afterConnectCallbackFunction);
     };
 
-    var getCollection = function(database, collection, response) {
+    QueryMongo.prototype.getCollection = function(database, collection, response) {
 
         // Count documents in the collection
         collection.count(function(err, count) {
             console.log(format("count = %s", count));
         });
 
-        // View the collection
+        // Return the collection to the response as JSON
         collection.find().toArray(function(err, results) {
             console.dir(results);
             // $("#mongoData").html(results);
             database.close();
-            var body = '<html><body><h2>Mongo Data: ' + results[0].firstName + '</h2></body></html>';
-            response.setHeader('Content-Type', 'text/html');
-            response.setHeader('Content-Length', Buffer.byteLength(body));
-            response.end(body);
+            /*
+             var body = '<html><body><h2>Mongo Data: ' + results[0].firstName + '</h2></body></html>';
+             response.setHeader('Content-Type', 'text/html');
+             response.setHeader('Content-Length', Buffer.byteLength(body));
+             response.end(body);
+             */
+            response.json(results);
         });
 
     };
@@ -73,21 +76,23 @@ var QueryMongo = (function() {
                 throw err;
             }
             // database.close();
-            console.log("insert succeeded");
-            collection.count(function(err, count) {
-                if (err) {
-                    throw err;
-                } else {
-                    console.log("collection.count:", count);
-                    if (count >= numberOfRecordsToInsert) {
-                        try {
-                            database.close();
-                        } catch(closeerr) {
-                            console.dir(closeerr);
-                        }
-                    }
-                }
-            });
+            console.log(objectToInsert.id, ": insert succeeded");
+            /*
+             collection.count(function(err, count) {
+             if (err) {
+             throw err;
+             } else {
+             console.log("collection.count:", count);
+             if (count >= numberOfRecordsToInsert) {
+             try {
+             database.close();
+             } catch(closeerr) {
+             console.dir(closeerr);
+             }
+             }
+             }
+             });
+             */
         });
     };
 
@@ -129,6 +134,7 @@ queryMongo.connect(function(err, db) {
         // Run a loop to generate the new data
         for (var recNum = 0; recNum < numberOfRecordsToInsert; recNum++) {
             var data = {
+                "id" : recNum,
                 "firstName" : "Rita10" + recNum,
                 "lastName" : "Hill10" + recNum,
                 "address" : "10" + recNum + " Ruby Street",
