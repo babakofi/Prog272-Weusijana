@@ -30,7 +30,8 @@ var QueryMongo = (function() {
             getCollection(database, result);
         });
 
-    }
+    };
+    
     var getCollection = function(database, response) {
 
         var collection = database.collection('test_insert');
