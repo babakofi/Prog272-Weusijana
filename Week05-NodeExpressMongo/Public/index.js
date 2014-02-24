@@ -8,7 +8,6 @@ var MongoAddresses = (function() {'use strict';
     function MongoAddresses() {
         $("#readAll").click(readAll);
         $("#showData").click(showData);
-        $("#readRecords").click(readRecords);
 
         readAll();
     }
@@ -39,30 +38,6 @@ var MongoAddresses = (function() {'use strict';
                 $("#mongoData").append('<li>' + JSON.stringify(data[i]) + '</li>');
             }
         });
-    };
-
-    var insertNewRecord = function() {
-        console.log("insert New Record called");
-        $.getJSON('/newRecord', function(data) {
-            alert(data);
-        });
-    };
-
-    var readRecords = function() {
-        console.log("readRecords called");
-        var request = {};
-        request.numRequested = $('#numToRead').val();
-        $.getJSON('/readRecords', request, function(data) {
-            addresses = data;
-            console.log(data[0]);
-            console.log(data[1]);
-            displayRecord(0);
-            $("#addresses").empty();
-            for (var i = 0; i < data.length; i++) {
-                $("#addresses").append('<li>' + JSON.stringify(data[i]) + '</li>');
-            }
-        });
-
     };
 
     return MongoAddresses;
