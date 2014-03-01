@@ -1,61 +1,53 @@
 /**
- * @author Charlie Calvert
+ * @author Baba Kofi Weusijana
  */
 
+var config = require('./config.json');
 var express = require('express');
 var app = express();
+var MongoClient = require('mongodb').MongoClient;
 var format = require('util').format;
 var fs = require('fs');
-// var qm = require('./Library/QueryMongo');
-// var queryMongo = qm.QueryMongo; 
+var collectionName = 'Poems';
+var port = process.env.PORT || 30025;
+var dbpassword = config.dbpassword;
+// var dbURL = 'mongodb://prog272:'+dbpassword+'@127.0.0.1:27017/prog272';
+var dbURL = 'mongodb://prog272:'+dbpassword+'@ds033639.mongolab.com:33639/prog272';
+var database;
+
+// Open the test database that comes with MongoDb
+MongoClient.connect(dbURL, function(err, db) {
+    console.log('In MongoClient.connect Callback');
+    if (err) {
+        throw err;
+    }
+    database = db;
+    console.log('database:', database);
+});
+
+var getCollection = function(response) {
+    if (database) {
+        var collection = database.collection(collectionName);
+        // Count documents in the collection
+        collection.count(function(err, count) {
+            console.log(format("count = %s", count));
+        });
+
+        // Return the collection to the response as JSON
+        collection.find().toArray(function(err, results) {
+            console.log("typeof results:",typeof results);
+            console.dir(results);
+            response.json(results);
+        });
+    }
+};
 
 // Read the collection
-// app.get('/readAll', function(request, response) {'use strict';
-	// queryMongo.getAllDocuments(response);
-// });
-// 
-// app.get('/getDocumentCount', function(request, response) {'use strict';
-	// queryMongo.getDocumentCount(response);
-// });
-// 
-// app.get('/readTwo', function(request, response) { 'use strict';
-	// queryMongo.getDocuments(response, 2);
-// });
-// 
-// app.get('/readDocuments', function(request, response) { 'use strict';
-	// console.log("------------");
-	// console.log("Server side request for readRecords route");
-	// console.log("------------");
-	// console.log(request.query);
-	// var numToRead = parseInt(request.query.numRequested);
-	// console.log("Num to Read = " + numToRead);
-	// queryMongo.getDocuments(response, numToRead);
-// });
-// 
-// app.get('/newDocument', function(request, response) { 'use strict';
-	// console.log("------------");
-	// console.log("Server side request for newDocument route");
-	// console.log("------------");
-// 
-	// var fileContent = fs.readFileSync('Data.json', 'utf8');
-	// queryMongo.insertIntoCollection(JSON.parse(fileContent));
-	// response.send({ result: "Success" });
-// });
-// 
-// app.get('/hello', function(request, response) { 'use strict';
-	// response.send('Hi there.');
-// });
-// 
-// app.get('/barfoo', function(request, response) { 'use strict';
-	// response.send('foobar');
-// });
-// 
-// 
-// app.get('/remove', function(request, response) {'use strict';
-	// console.log('/remove Called');
-	// queryMongo.removeById();
-	// response.send("remove Called");
-// });
+app.get('/poems', function(request, response) {'use strict';
+    console.log("inside callback for app.get('/poems', callback)");
+    getCollection(response);
+});
+
 
 // Default.
 app.get('/', function(request, result) {'use strict';
@@ -68,5 +60,5 @@ app.get('/', function(request, result) {'use strict';
 app.use("/", express.static(__dirname + '/public'));
 app.use("/", express.static(__dirname + '/js'));
 
-app.listen(30025);
-console.log('Listening on port 30025');
+app.listen(port);
+console.log('Listening on port :' + port);
