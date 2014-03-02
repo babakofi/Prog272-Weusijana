@@ -3,6 +3,7 @@
  */
 var App = (function() {'use strict';
 
+    var datacontroller = new Data();
     var sonnets = [];
     var DEFAULT_KEYWORD_INPUTS_TEXT_VALUE = 'Enter Keywords';
 
@@ -103,8 +104,8 @@ var App = (function() {'use strict';
     };
 
     var readAll = function() {
-        console.log("readAll called");
-        $.getJSON('/poems', function(data) {
+        datacontroller.readAll(function(data) {
+            console.log("readAll callback called");
             console.log(data[0]);
             sonnets = data[0].sonnets;
             if (sonnets) {
@@ -118,8 +119,7 @@ var App = (function() {'use strict';
         if (sonnets) {
             var keywords = $("#keywordInputs").val().trim().split(/\b\s+/);
             if (keywords) {
-                resetUI();
-                sonnetsKeywordsForLoop:
+                resetUI(); sonnetsKeywordsForLoop:
                 for (var i = 0; i < sonnets.length; i++) {
                     var sonnetsKeywords = sonnets[i].keywords;
                     if (sonnetsKeywords) { searchKeywordsForLoop:
@@ -152,23 +152,18 @@ var App = (function() {'use strict';
         $("#mongoData").empty();
     };
 
-    // TODO: Upsert just the sonnets part of the collection
+    // Upsert just the sonnets part of the collection
     var updateSonnnets = function() {
         console.log("updateSonnnets called");
-        var data = {
-            "sonnets" : sonnets
-        };
-        console.log("data:");
-        console.log(data);
-        $.post('/updateSonnnets', data, function(response, status, xhr) {
-            // Do something with the request
-            console.log("updateSonnnets response:");
+        datacontroller.updateSonnnets(sonnets, function(response, status, xhr) {
+            console.log("updateSonnnets callback called");
+            console.log("response:");
             console.log(response);
-            console.log("updateSonnnets status:");
+            console.log("status:");
             console.log(status);
-            console.log("updateSonnnets xhr:");
+            console.log("xhr:");
             console.log(xhr);
-        }, 'json');
+        });
     };
 
     var deleteItem = function() {

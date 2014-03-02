@@ -55,36 +55,38 @@ app.post('/updateSonnnets', function(request, response) {'use strict';
     console.log("inside callback for app.post('/updateSonnnets', callback)");
     //console.log("request.body:");
     //console.log(request.body);
-    console.log("request.body.sonnets:");
-    console.log(request.body.sonnets);
+    if (request.body.sonnets) {
+        console.log("request.body.sonnets:");
+        console.log(request.body.sonnets);
 
-    if (database) {
-        var collection = database.collection(collectionName);
-        // Update the document using an upsert operation, ensuring creation if it does not exist
-        // An "id" field is necessary to find and update the correct record
-        collection.update({
-            "id" : 0
-        }, {
-            "id" : 0,
-            "sonnets" : request.body.sonnets
-        }, {
-            upsert : true,
-            w : 1
-        }, function(err, result) {
-            if (err) {
-                console.log("err:", err);
-            }
-            if ((result) && (result == 1)) {
-                // Return the collection to the response as JSON
-                collection.find().toArray(function(err, results) {
-                    console.log("typeof results:", typeof results);
-                    console.dir(results);
-                    response.json(results);
-                });
-            } else {
-                console.log("result:", result);
-            }
-        });
+        if (database) {
+            var collection = database.collection(collectionName);
+            // Update the document using an upsert operation, ensuring creation if it does not exist
+            // An "id" field is necessary to find and update the correct record
+            collection.update({
+                "id" : 0
+            }, {
+                "id" : 0,
+                "sonnets" : request.body.sonnets
+            }, {
+                upsert : true,
+                w : 1
+            }, function(err, result) {
+                if (err) {
+                    console.log("err:", err);
+                }
+                if ((result) && (result == 1)) {
+                    // Return the collection to the response as JSON
+                    collection.find().toArray(function(err, results) {
+                        console.log("typeof results:", typeof results);
+                        console.dir(results);
+                        response.json(results);
+                    });
+                } else {
+                    console.log("result:", result);
+                }
+            });
+        }
     }
 });
 
