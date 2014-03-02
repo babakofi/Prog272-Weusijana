@@ -61,6 +61,7 @@ app.post('/updateSonnnets', function(request, response) {'use strict';
     if (database) {
         var collection = database.collection(collectionName);
         // Update the document using an upsert operation, ensuring creation if it does not exist
+        // An "id" field is necessary to find and update the correct record
         collection.update({
             "id" : 0
         }, {
@@ -99,6 +100,8 @@ app.get('/', function(request, result) {'use strict';
 
 app.use("/", express.static(__dirname + '/public'));
 app.use("/", express.static(__dirname + '/js'));
+app.use("/tests", express.static(__dirname + '/tests'));
+app.use("/public", express.static(__dirname + '/public'));
 
 app.listen(port);
 console.log('Listening on port :' + port);
