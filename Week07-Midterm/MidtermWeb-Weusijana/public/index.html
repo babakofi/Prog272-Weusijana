@@ -5,12 +5,11 @@
 		<meta charset="utf-8">
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>MidtermWeb-Weusijana</title>
+		<title>Sonnets Weusijana</title>
 
 		<meta name="description" content="">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
 		<!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
 		<link rel="stylesheet" href="css/normalize.css">
@@ -24,30 +23,31 @@
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<!-- Add your site or application content here -->
-		<h1 style="text-align: center;">MidtermWeb-Weusijana</h1>
+		<h1 style="text-align: center;">Sonnets</h1>
 
-		<input size="72" name="keywordInputs" id="keywordInputs" value="Enter Keywords">
+		<input size="72" name="keywordInputs" id="keywordInputs" value="Enter Keywords" type="text">
 		<button id="search">
-			Search for Keywords
+			Search for
+			Keywords
 		</button>
 		<button id="readAll">
 			Reset
 		</button>
-		<div style="font-size: x-small;
-		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"
-		id="titles">
+		<div style="font-size: x-small; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;" id="titles">
 
 		</div>
 
 		<hr>
 		<div class="dataDisplay">
 			<p>
-				<em><span id="title"> </span></em>
+				<strong><em><span id="title"> </span></em>
 				<br>
-				By <span id="author"> </span>
+				By <span id="author"> </span></strong>
 			</p>
 			<p>
-				<span id="content"> </span>
+				<span style="font-family: &quot;Times New Roman&quot;,Times,serif;" id="content">
+					<br>
+				</span>
 			</p>
 			<p id="keywords">
 
@@ -60,13 +60,13 @@
 		<button id="showData">
 			Show Item
 		</button>
-		<ul id="mongoData">
-
+		<ul style="visibility: hidden;" id="mongoData">
+			
 		</ul>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script>
-            window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')
+            window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>');
 		</script>
 		<script src="js/plugins.js"></script>
 		<script src="js/main.js"></script>

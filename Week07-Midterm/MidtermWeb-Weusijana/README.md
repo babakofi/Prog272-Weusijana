@@ -1,15 +1,15 @@
-# Shakespeare's 154 Sonnets
+# Shakespeare Sonnets
 This Web App has these features:
 
 - Display a list of all poems to the user
 
 When the Web App is loaded it displays HTML with a series of buttons on it. Users pick one of the buttons to read in a list of poems, select a poem, etc.
 
-- Let the user pick a poem and display it
-- Let the user search on keywords associated with the poems and display the results in the form of titles. When a title is selected display the poem.
+- Lets the user pick a poem and display it
+- Lets the user search on keywords associated with the poems and display the results in the form of titles. When a title is selected the poem is displayed.
 - Store a new poem in the database. The poem can be stored as JSON on the drive
 - Delete a poem from the database.
-- Reads in a config listed in JSON
+- Reads in a config.json file on the server side
 
 This project was started with [HTML5 Boilerplate](http://html5boilerplate.com)
 
