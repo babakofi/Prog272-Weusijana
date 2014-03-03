@@ -8,9 +8,18 @@ var Data = (function() {'use strict';
     function Data() {
     }
 
+
     Data.prototype.readAll = function(callback) {
         console.log("readAll called");
-        $.getJSON('/poems', callback);
+        $.getJSON('http://192.168.1.5:30025/poems', callback).fail(function(failCallbacks) {
+            console.log("$.getJSON('/poems', callback) ERROR!");
+            console.log("failCallbacks:");
+            $.each(failCallbacks, function(index, value) {
+                console.log(index + ": " + value);
+            });
+        }).always(function() {
+            console.log("$.getJSON('/poems', callback) complete");
+        });
     };
 
     /* Upserts just the sonnets part of the collection */
@@ -21,7 +30,7 @@ var Data = (function() {'use strict';
         };
         // console.log("data:");
         // console.log(data);
-        $.post('/updateSonnnets', data, callback, 'json');
+        $.post('http://192.168.1.5:30025/updateSonnnets', data, callback, 'json');
     };
 
     return Data;

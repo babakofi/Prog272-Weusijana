@@ -152,7 +152,7 @@ var App = (function() {'use strict';
     };
 
     var readAll = function() {
-        datacontroller.readAll(function(data) {
+        datacontroller.readAll(function(data, textStatus, jqXHR) {
             console.log("readAll callback called");
             console.log(data[0]);
             sonnets = data[0].sonnets;
