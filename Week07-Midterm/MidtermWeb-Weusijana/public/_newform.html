@@ -1,0 +1,42 @@
+<h2 style="text-align: center;">Write your new sonnet and click the
+submit button below.</h2>
+<form enctype="text/json" method="post" action="/updateSonnnets" name="newSonnetForm">
+	<fieldset>
+		<legend>
+			Title
+		</legend>
+		<input name="title">
+		<br>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Author
+		</legend>
+		<input name="author">
+		<br>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Content
+		</legend>
+		<textarea cols="80" rows="10" name="content"></textarea>
+		<br>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Keywords (separated by spaces)
+		</legend>
+		<input name="keywords">
+		<br>
+	</fieldset>
+	<button value="Submit" name="submit" type="submit">
+		Save this new
+		Sonnet
+	</button>
+	<button value="Reset" name="reset" type="reset">
+		Reset
+	</button>
+</form>
+<button value="Cancel" name="cancel" id="cancel">
+	Return to viewing Sonnets
+</button>

@@ -7,24 +7,71 @@ var App = (function() {'use strict';
     var sonnets = [];
     var DEFAULT_KEYWORD_INPUTS_TEXT_VALUE = 'Enter Keywords';
 
-    function App() {
-        $("#readAll").click(readAll);
-        $("#showData").click(showData);
-        $("#search").click(searchForKeywords);
-        $('#keywordInputs').keydown(function(event) {
-            if (event.keyCode == 13) {
-                $('#search').trigger('click');
-            }
-        });
-        $("#keywordInputs").focus(function(event) {
-            if (this.value == DEFAULT_KEYWORD_INPUTS_TEXT_VALUE) {
-                this.value = '';
-            }
-        });
-        $("#deleteItem").click(deleteItem);
-
-        readAll();
+    var App = function() {
+        loadDefaultMainContent();
     }
+    var loadDefaultMainContent = function() {
+        $("#main_content").load("_default.html", function(responseText, textStatus, XMLHttpRequest) {
+            console.log("_default.html loaded into #main_content");
+            $("#readAll").click(readAll);
+            $("#showData").click(showData);
+            $("#search").click(searchForKeywords);
+            $('#keywordInputs').keydown(function(event) {
+                if (event.keyCode == 13) {
+                    $('#search').trigger('click');
+                }
+            });
+            $("#keywordInputs").focus(function(event) {
+                if (this.value == DEFAULT_KEYWORD_INPUTS_TEXT_VALUE) {
+                    this.value = '';
+                }
+            });
+            $("#deleteItem").click(deleteItem);
+            $("#newItem").click(loadNewForm);
+
+            readAll();
+        });
+    };
+
+    var loadNewForm = function() {
+        $("#main_content").load("_newform.html", function(responseText, textStatus, XMLHttpRequest) {
+            console.log("_newform.html loaded into #main_content");
+            
+            $("#cancel").click(loadDefaultMainContent);
+            
+            $("form").submit(function(event) {
+                console.log("Handler for form.onsubmit() called.");
+                event.preventDefault();
+                
+                // Add new sonnet to sonnets
+                var sonnet = {};
+                var title = $("input[name='title']").val();
+                console.log("title:");
+                console.log(title);
+                sonnet.title = title;
+                var author = $("input[name='author']").val();
+                console.log("author:");
+                console.log(author);
+                sonnet.author = author;
+                var content = $("textarea[name='content']").val();
+                console.log("content:");
+                console.log(content);
+                sonnet.content = content;
+                var keywords = $("input[name='keywords']").val().trim().split(/\b\s+/);
+                console.log("keywords:");
+                console.log(keywords);
+                sonnet.keywords = keywords;
+                console.log("sonnet:");
+                console.log(sonnet);
+                sonnets.push(sonnet);
+
+                datacontroller.updateSonnnets(sonnets, function() {
+                    loadDefaultMainContent();
+                });
+            });
+            
+        });
+    };
 
     /* Escapes regular expressions like Ruby's RegExp.escape
      * See: http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript/3561711#3561711
@@ -52,7 +99,7 @@ var App = (function() {'use strict';
                 }
             }
             $('#userIndex').val(index + 1);
-            window.location.hash="dataDisplay";
+            window.location.hash = "dataDisplay";
         } else {
             console.log("displayRecord:Problem with index:", index);
             console.log("isNaN(index):", isNaN(index));
@@ -120,7 +167,8 @@ var App = (function() {'use strict';
         if (sonnets) {
             var keywords = $("#keywordInputs").val().trim().split(/\b\s+/);
             if (keywords) {
-                resetUI(); sonnetsKeywordsForLoop:
+                resetUI();
+                sonnetsKeywordsForLoop:
                 for (var i = 0; i < sonnets.length; i++) {
                     var sonnetsKeywords = sonnets[i].keywords;
                     if (sonnetsKeywords) { searchKeywordsForLoop:
