@@ -16,6 +16,8 @@
 
 		<link rel="stylesheet" href="css/main.css">
 
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css">
+
 		<script src="js/vendor/modernizr-2.7.1.min.js"></script>
 	</head>
 	<body>
@@ -23,54 +25,64 @@
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<!-- Add your site or application content here -->
-		<h1 style="text-align: center;">Sonnets</h1>
+		<div data-role="page" id="homepage">
+			<div data-role="header">
+				<h1 style="text-align: center;">Sonnets</h1>
+			</div>
+			<div data-role="content">
+				<input size="72" name="keywordInputs" id="keywordInputs" value="Enter Keywords" type="text">
+				<button id="search">
+					Search for
+					Keywords
+				</button>
+				<button id="readAll">
+					Reset
+				</button>
+				<div style="font-size: x-small; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;" id="titles">
 
-		<input size="72" name="keywordInputs" id="keywordInputs" value="Enter Keywords" type="text">
-		<button id="search">
-			Search for
-			Keywords
-		</button>
-		<button id="readAll">
-			Reset
-		</button>
-		<div style="font-size: x-small; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;" id="titles">
+				</div>
 
+				<hr>
+				<div class="dataDisplay">
+					<a name="dataDisplay"> </a>
+					<p>
+						<strong><em><span id="title"> </span></em>
+						<br>
+						By <span id="author"> </span></strong>
+					</p>
+					<p>
+						<span style="font-family: &quot;Times New Roman&quot;,Times,serif;" id="content">
+							<br>
+						</span>
+					</p>
+					<p id="keywords">
+
+					</p>
+				</div>
+
+				<hr>
+				<input id="userIndex" value="1" type="number">
+				&nbsp;
+				<button id="showData">
+					Show Item
+				</button>
+				<button id="deleteItem">
+					Delete Item
+				</button>
+				<ul style="visibility: hidden;" id="mongoData">
+
+				</ul>
+			</div>
+			<div data-role="footer">
+				Copyright 2014, Baba Kofi Weusijana, All Rights
+				Reserved
+			</div>
 		</div>
-
-		<hr>
-		<div class="dataDisplay">
-			<p>
-				<strong><em><span id="title"> </span></em>
-				<br>
-				By <span id="author"> </span></strong>
-			</p>
-			<p>
-				<span style="font-family: &quot;Times New Roman&quot;,Times,serif;" id="content">
-					<br>
-				</span>
-			</p>
-			<p id="keywords">
-
-			</p>
-		</div>
-
-		<hr>
-		<input id="userIndex" value="1" type="number">
-		&nbsp;
-		<button id="showData">
-			Show Item
-		</button>
-		<button id="deleteItem">
-			Delete Item
-		</button>
-		<ul style="visibility: hidden;" id="mongoData">
-			
-		</ul>
-
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script>
             window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>');
 		</script>
+		<!-- <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script> -->
 		<script src="js/plugins.js"></script>
 		<script src="js/data.js"></script>
 		<script src="js/main.js"></script>

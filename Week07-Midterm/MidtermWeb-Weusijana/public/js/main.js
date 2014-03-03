@@ -52,6 +52,7 @@ var App = (function() {'use strict';
                 }
             }
             $('#userIndex').val(index + 1);
+            window.location.hash="dataDisplay";
         } else {
             console.log("displayRecord:Problem with index:", index);
             console.log("isNaN(index):", isNaN(index));
