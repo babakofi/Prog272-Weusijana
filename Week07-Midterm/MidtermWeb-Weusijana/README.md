@@ -7,13 +7,13 @@ When the Web App is loaded it displays HTML with a series of buttons on it. User
 
 - Lets the user pick a poem and display it
 - Lets the user search on keywords associated with the poems and display the results in the form of titles. When a title is selected the poem is displayed.
-- Store a new poem in the database. The poem can be stored as JSON on the drive
-- Delete a poem from the database.
+- Stores a new poem in the database.
+- Deletes a poem from the database.
 - Reads in a config.json file on the server side
 
 This project was started with [HTML5 Boilerplate](http://html5boilerplate.com)
 
-# Instructions for developers:
+# Server side testing instructions for developers:
 Be sure you have installed Bower. On Linux:
 
 	sudo npm install -g bower
@@ -37,30 +37,7 @@ Or
 
 	npm install request --save-dev
 	
-## Create Route
-
-Create a simple route you want to test:
-
-	app.get('/hello', function(request, response) { 'use strict';
-		response.send('Hi there.');
-	});
-	
-## Basic Jasmine-Noded
-
-Now test it by saving the following as **Tests/SimpleSpec.js**:
-
-	var request = require('request');
-
-	describe("A suite", function() {
-		it("should respond with hello world", function(done) {
-			request("http://localhost:30025/hello", function(error, response, body) {
-				expect(body).toEqual("Hi there.");
-				done();
-			});
-		});
-	}); 
-
-## Run the test:
+## Run the tests in serverSpec.js:
 
 Now run start your server running in one shell:
 
@@ -68,5 +45,9 @@ Now run start your server running in one shell:
 	
 Then open a second shell and run your tests:
 
-	jasmine-node Tests/
+	./RunTests.sh
+
+That should also generate test reports to the .reports directory in JUinit XML format. If you don't want to generate reports, just run:
+
+	jasmine-node Tests/serverSpec.js
 
