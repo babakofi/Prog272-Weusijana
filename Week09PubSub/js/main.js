@@ -1,6 +1,7 @@
 /**
  * @author Baba Kofi Weusijana
  */
+var DEBUG = true;
 var App = (function() {'use strict';
 
     var App = function() {

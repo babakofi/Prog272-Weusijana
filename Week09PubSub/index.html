@@ -27,20 +27,45 @@
 		<!-- Add your site or application content here -->
 		<div data-role="page" id="homepage">
 			<div data-role="header">
-				<h1 style="text-align: center;">Week 09: Publish and Subscribe</h1>
+				<h1 style="text-align: center;">Calculator</h1>
 			</div>
 			<div data-role="content" id="main_content">
-		        <h1>PubSub Messenger</h1>
-		        
-		        <p>Click on the button to send a message.</p>
-		        
-		        <p>See the console for additional information</p>
-		        
-		        <button id="privateButton">Send Message</button>
-		        
-		        <p id="message01"> </p>
-		        <p id="message02"> </p>
-				
+
+				<span id="flash" style="color: red"> </span>
+				<span id="debugMessageDisplay" style="color: darkgrey; display: none;"> </span>
+				<span id="debugDetailMessageDisplay" style="color: red; display: none;"> </span>
+
+				<fieldset>
+					<legend>
+						First Operand
+					</legend>
+					<input id="operand1" name="operand1" type="number" value="3" />
+				</fieldset>
+				<fieldset>
+					<legend>
+						Second Operand
+					</legend>
+					<input id="operand2" name="operand2" type="number" value="2" />
+				</fieldset>
+				<fieldset>
+					<legend>
+						Answer
+					</legend>
+					<input id="answer" name="answer" type="number" value="" readonly=""/>
+				</fieldset>
+					Click on buttons to run calulations.
+				<button id="addButton">
+					+
+				</button>
+				<button id="subtractButton">
+					-
+				</button>
+				<button id="multiplyButton">
+					*
+				</button>
+
+				<hr/>
+
 			</div>
 			<div data-role="footer">
 				Copyright 2014, Baba Kofi Weusijana, All Rights Reserved
