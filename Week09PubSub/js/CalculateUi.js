@@ -4,12 +4,13 @@
 
 // Publisher
 var CalculateUi = (function() {'use strict';
-
     /*
-     * The point is that there is no reference to subscribers
-     * in this module and yet they can receive messages from
-     * this publisher.
+     * The point is that there is no reference to subscribers & publishers
+     * in this module and yet they can communicate messages.
      */
+
+    var UPDATEUI_TOPIC = "updateUI";
+
     function CalculateUi() {
         console.log("Publisher CalculateUi constructor called.");
         if (DEBUG) {
@@ -17,6 +18,7 @@ var CalculateUi = (function() {'use strict';
             $("#debugDetailMessageDisplay").show();
         }
         $("#addButton").click(addButtonClickHandler);
+        $.subscribe(UPDATEUI_TOPIC, updateUI);
         $.publish('debug', {
             message : "Publisher CalculateUi constructor called"
         });
@@ -54,17 +56,19 @@ var CalculateUi = (function() {'use strict';
         }
         // It should then publish a request for an object that can add the two numbers.
         // It should pass both numbers in the request.
-        // It should also provide a means for any subscriber to send back an answer.
-        var callback = function(event, answer) {
-            console.log("add's callback called with event:", event);
-            console.log("answer:", answer);
-            if (answer != undefined && answer != null) {
-                if (!isNaN(answer)) {
-                    $("#answer").hide().val(answer).show();
-                }
+        // It should also provide a means for any subscriber to send back an answer
+        // (by reversing roles and publishing the answer).
+        $.publish('add', [op1, op2, UPDATEUI_TOPIC]);
+    };
+
+    var updateUI = function(event, answer) {
+        console.log("updateUI called with event:", event);
+        console.log("answer:", answer);
+        if (answer != undefined && answer != null) {
+            if (!isNaN(answer)) {
+                $("#answer").hide().val(answer).show();
             }
-        };
-        $.publish('add', [op1, op2, callback]);
+        }
     };
 
     return CalculateUi;
