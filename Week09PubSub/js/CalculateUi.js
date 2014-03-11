@@ -12,12 +12,16 @@ var CalculateUi = (function() {'use strict';
     var UPDATEUI_TOPIC = "updateUI";
 
     function CalculateUi() {
-        console.log("Publisher CalculateUi constructor called.");
+        if (DEBUG)
+            console.log("Publisher CalculateUi constructor called.");
         if (DEBUG) {
             $("#debugMessageDisplay").show();
             $("#debugDetailMessageDisplay").show();
         }
-        $("#addButton").click(addButtonClickHandler);
+        $("#add").click(opButtonClickHandler);
+        $("#subtract").click(opButtonClickHandler);
+        $("#multiply").click(opButtonClickHandler);
+        $("#divide").click(opButtonClickHandler);
         $.subscribe(UPDATEUI_TOPIC, updateUI);
         $.publish('debug', {
             message : "Publisher CalculateUi constructor called"
@@ -35,20 +39,24 @@ var CalculateUi = (function() {'use strict';
         return undefined;
     };
 
-    var addButtonClickHandler = function(event) {
-        console.log("Publisher addButtonClickHandler method called.");
-        $.publish('debugDetail', 'CalculateUi.addButtonClickHandler called by ' + String(this));
+    var opButtonClickHandler = function(event) {
+        var operationTopic = $(this).attr("id");
+        if (DEBUG)
+            console.log("Publisher opButtonClickHandler method called by:", operationTopic);
+        $.publish('debugDetail', 'CalculateUi.opButtonClickHandler called by ' + String(this));
         // First gather the user input.
         $("#flash").empty();
         var op1 = $("#operand1").val();
-        console.log("op1:", op1);
+        if (DEBUG)
+            console.log("op1:", op1);
         op1 = validateAndParseInput(op1);
         if (op1 === undefined) {
             $("#flash").html("Your first operand is not a number.");
             return;
         }
         var op2 = $("#operand2").val();
-        console.log("op2:", op2);
+        if (DEBUG)
+            console.log("op2:", op2);
         op2 = validateAndParseInput(op2);
         if (op2 === undefined) {
             $("#flash").html("Your second operand is not a number.");
@@ -58,14 +66,16 @@ var CalculateUi = (function() {'use strict';
         // It should pass both numbers in the request.
         // It should also provide a means for any subscriber to send back an answer
         // (by reversing roles and publishing the answer).
-        $.publish('add', [op1, op2, UPDATEUI_TOPIC]);
+        $.publish(operationTopic, [op1, op2, UPDATEUI_TOPIC]);
     };
 
     var updateUI = function(event, answer) {
-        console.log("updateUI called with event:", event);
-        console.log("answer:", answer);
+        if (DEBUG)
+            console.log("updateUI called with event:", event);
+        if (DEBUG)
+            console.log("answer:", answer);
         if (answer != undefined && answer != null) {
-            if (!isNaN(answer)) {
+            if (!isNaN(answer) || answer == Infinity) {
                 $("#answer").hide().val(answer).show();
             }
         }
