@@ -12,7 +12,7 @@ require.config({
 	}
 });
 
-require([ 'plugins', 'jquery', "jquery.mobile", "Calculate", "CalculateUi", ],
+require([ 'plugins', 'jquery', "jquery.mobile", "Calculate", "CalculateUi" ],
 		function(Plugins, jQuery, jQuery_mobile, Calculate, CalculateUi) {
 			/**
 			 * Must call Plugins.Plugins(); first to avoid problems with
