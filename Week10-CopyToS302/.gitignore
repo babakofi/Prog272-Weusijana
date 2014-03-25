@@ -1,0 +1,12 @@
+node_modules
+Deploy
+CloudNotes
+Files
+MySite
+config.json
+winston.log
+foo.txt
+BuildAll.py
+.pydevproject
+.idea
+.idea/**
