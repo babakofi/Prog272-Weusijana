@@ -14,22 +14,6 @@ var fs = require("fs");
 var exec = require('child_process').exec;
 var queryMongo = require('./Source/QueryMongo').QueryMongo;
 var options = null;
-queryMongo.callOnLoadConfig = function() {
-	console.log("queryMongo.callOnLoadConfig called.");
-	if (options === null) {
-		var response1 = {
-			send : function(jsonResponse) {
-				if (jsonResponse) {
-					if (jsonResponse.result === "Success") {
-						options = jsonResponse.mongoDocument;
-						console.log("options:", options);
-					}
-				}
-			}
-		};
-		readAndInsertConfig(response1, "Options.json");
-	}
-};
 
 var app = express();
 
@@ -164,10 +148,11 @@ function readAndInsertConfig(response, filename) {
 	'use strict';
 	console.log("readAndInsertConfig called.");
 	console.log("response:", response);
-	console.log("filename:", filename);
 	if ((filename === null) || (filename === undefined)) {
-		filename = 'Options.json';
+		console.log("filename: WAS null/undefined");
+		filename = 'config.json';
 	}
+	console.log("filename:", filename);
 	fs.readFile(filename, 'utf8', function(err, fileContent) {
 		if (err) {
 			console.log(err);
@@ -220,53 +205,7 @@ app.get('/queryProject', function(request, response) {
 	queryMongo.getCollectionProject(response, query, collectionName);
 });
 
-http
-		.createServer(app)
-		.listen(
-				app.get('port'),
-				function() {
-					'use strict';
-					console.log('Express server listening on port '
-							+ app.get('port'));
-					if (options === null) {
-
-						// TODO: Try to get options from MongoDB
-						var request = {
-							"query" : {
-								"name" : "Options"
-							}
-						};
-						var responseToMongoQuery = {
-							send : function(dataArray) {
-								if (dataArray) {
-									// Should be an array
-									if (dataArray.length > 0) {
-										options = dataArray[0];
-										console.log("options:", options);
-									} else {
-
-										// Try to get options from file system
-										// and insert into
-										// MongoDB
-										var insertResponse = {
-											send : function(jsonResponse) {
-												if (jsonResponse) {
-													if (jsonResponse.result === "Success") {
-														options = jsonResponse.mongoDocument;
-														console.log("options:",
-																options);
-													}
-												}
-											}
-										};
-										readAndInsertConfig(insertResponse,
-												"Options.json");
-
-									}
-								}
-							}
-						};
-						queryMongo.getCollectionProject(responseToMongoQuery,
-								request, collectionName);
-					}
-				});
+http.createServer(app).listen(app.get('port'), function() {
+	'use strict';
+	console.log('Express server listening on port ' + app.get('port'));
+});
