@@ -67,14 +67,31 @@ app.get('/', function(request, response) {
 app.get('/getOptions', function(request, response) {
 	'use strict';
 	console.log("app.get('/getOptions'... called");
-	if (options === null) {
-		console.log("options === null, try reading from file system...");
-		options = fs.readFileSync("Options.json", 'utf8');
-		options = JSON.parse(options);
+	try {
+		if (options === null) {
+			console.log("options === null, try reading from file system...");
+			options = fs.readFileSync("Options.json", 'utf8');
+			options = JSON.parse(options);
+		}
+		console.log("options:");
+		console.log(options);
+		response.send(options);
+	} catch (e) {
+		console.log(e);
+		console.log("options === null, try reading from cloud db...");
+		var query = {
+			"name" : "Options"
+		};
+		console.log("query is a:", typeof query);
+		console.log("query:");
+		console.log(query);
+//		request.query = query;
+		try {
+			queryMongo.getCollectionData(response, query, collectionName);
+		} catch (queryErr) {
+			console.log(queryErr);
+		}
 	}
-	console.log("options:");
-	console.log(options);
-	response.send(options);
 });
 
 app.get('/listBuckets', function(request, response) {
