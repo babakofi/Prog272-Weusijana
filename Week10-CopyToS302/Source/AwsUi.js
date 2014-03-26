@@ -18,37 +18,24 @@ define([ 'jquery', 'jqm' ], function() {
 
 		$("#buildAll").click(buildAll);
 
-		$("#pathToPython").change(updateHandler);
-		$("#copyFrom").change(updateHandler);
-		$("#copyTo").change(updateHandler);
-		$("#filesToCopy").change(updateHandler);
+		$("#pathToPython").change(transformOptionsUpdateHandler);
+		$("#copyFrom").change(transformOptionsUpdateHandler);
+		$("#copyTo").change(transformOptionsUpdateHandler);
+		$("#filesToCopy").change(transformOptionsUpdateHandler);
+
+		$("#currentDocument").change(optionsUpdateHandler);
+		$("#pathToConfig").change(optionsUpdateHandler);
+		$("#reallyWrite").change(optionsUpdateHandler);
+		$("#bucketName").change(optionsUpdateHandler);
+		$("#folderToWalk").change(optionsUpdateHandler);
+		$("#s3RootFolder").change(optionsUpdateHandler);
+		$("#createFolderToWalkOnS3").change(optionsUpdateHandler);
+		$("#createIndex").change(optionsUpdateHandler);
+		$("#filesToIgnore").change(optionsUpdateHandler);
 
 		getBuildConfig();
 		getOptions();
 	}
-
-	var updateHandler = function(event) {
-		console.log("updateHandler called with event:");
-		console.log(event);
-		console.log("$(this).attr('id'):");
-		var id = $(this).attr('id');
-		console.log(id);
-		console.log("$(this).val():");
-		var newValue = $(this).val();
-		console.log(newValue);
-		if (transformOptions) {
-			console.log("Old transformOptions value:",
-					transformOptions[dataIndexTransform][id]);
-			if (id === "filesToCopy") {
-				// Array data must be built from the string
-				transformOptions[dataIndexTransform][id] = newValue.split(",");
-			} else {
-				transformOptions[dataIndexTransform][id] = newValue;
-			}
-			console.log("Newly set transformOptions value:",
-					transformOptions[dataIndexTransform][id]);
-		}
-	};
 
 	var buildAll = function() {
 		console.log("buildAll called in AwsUI");
@@ -74,11 +61,78 @@ define([ 'jquery', 'jqm' ], function() {
 		});
 	};
 
+	var transformOptionsUpdateHandler = function(event) {
+		console.log("transformOptionsUpdateHandler called with event:");
+		console.log(event);
+		console.log("$(this).attr('id'):");
+		var id = $(this).attr('id');
+		console.log(id);
+		console.log("$(this).val():");
+		var newValue = $(this).val();
+		console.log(newValue);
+		if (transformOptions) {
+			console.log("Old transformOptions value:",
+					transformOptions[dataIndexTransform][id]);
+			if (id === "filesToCopy") {
+				// Array data must be built from the string
+				transformOptions[dataIndexTransform][id] = newValue.split(",");
+			} else {
+				transformOptions[dataIndexTransform][id] = newValue;
+			}
+			console.log("Newly set transformOptions value:",
+					transformOptions[dataIndexTransform][id]);
+		}
+	};
+
 	var displayTransformConfig = function(options) {
 		$("#pathToPython").val(options.pathToPython);
 		$("#copyFrom").val(options.copyFrom);
 		$("#copyTo").val(options.copyTo);
 		$("#filesToCopy").val(options.filesToCopy);
+	};
+
+	var optionsUpdateHandler = function(event) {
+		console.log("optionsUpdateHandler called with event:");
+		console.log(event);
+		console.log("$(this).attr('id'):");
+		var id = $(this).attr('id');
+		console.log(id);
+		console.log("$(this).val():");
+		var newValue = $(this).val();
+		console.log(newValue);
+		if (options) {
+			console.log("Old options value:", options[id]);
+			switch (id) {
+			case "currentDocument":
+				if (!isNaN(newValue)) {
+					dataIndex = parseInt(newValue) - 1;
+				}
+				break;
+			case "reallyWrite":
+				newValue = ($(this).prop("checked"));
+				console.log("typeof newValue:", typeof newValue);
+				console.log("newValue:", newValue);
+				options[id] = newValue;
+				break;
+			case "createFolderToWalkOnS3":
+				newValue = ($(this).prop("checked"));
+				console.log("newValue:", newValue);
+				options[id] = newValue;
+				break;
+			case "createIndex":
+				newValue = ($(this).prop("checked"));
+				console.log("newValue:", newValue);
+				options[id] = newValue;
+				break;
+			case "filesToIgnore":
+				// Array data must be built from the string
+				options[id] = newValue.split(",");
+				break;
+			default:
+				options[id] = newValue;
+			}
+			console.log("Newly set options value:", options[id]);
+		}
 	};
 
 	var displayOptions = function(options) {
