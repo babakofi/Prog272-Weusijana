@@ -71,23 +71,29 @@
 
 				<div class="displayKing">
 					<label for="documentCount">Document Count</label>
-					<input id="documentCount">
+					<input id="documentCount" name="documentCount" disabled="disabled">
 					<label for="currentDocument">Current Document</label>
-					<input id="currentDocument" name="currentDocument">
+					<input id="currentDocument" name="currentDocument" disabled="disabled">
 					<label for="pathToConfig">pathToConfig</label>
 					<input id="pathToConfig" name="pathToConfig">
-					<label for="reallyWrite">reallyWrite</label>
-					<input id="reallyWrite" name="reallyWrite">
+					<fieldset data-role="reallyWrite" data-iconpos="right">
+						<label for="reallyWrite">reallyWrite</label>
+						<input type="checkbox" name="reallyWrite" id="reallyWrite" checked="">
+					</fieldset>
 					<label for="bucketName">bucketName</label>
 					<input id="bucketName" name="bucketName">
 					<label for="folderToWalk">folderToWalk</label>
 					<input id="folderToWalk" name="folderToWalk">
 					<label for="s3RootFolder">s3RootFolder</label>
 					<input id="s3RootFolder" name="s3RootFolder">
-					<label for="createFolderToWalkOnS3">createFolderToWalkOnS3</label>
-					<input id="createFolderToWalkOnS3" name="createFolderToWalkOnS3">
-					<label for="createIndex">createIndex</label>
-					<input id="createIndex" name="createIndex">
+					<fieldset data-role="createFolderToWalkOnS3" data-iconpos="right">
+						<label for="createFolderToWalkOnS3">createFolderToWalkOnS3</label>
+						<input type="checkbox" name="createFolderToWalkOnS3" id="createFolderToWalkOnS3" checked="">
+					</fieldset>
+					<fieldset data-role="createIndex" data-iconpos="right">
+						<label for="createIndex">createIndex</label>
+						<input type="checkbox" name="createIndex" id="createIndex" checked="">
+					</fieldset>
 					<label for="filesToIgnore">filesToIgnore</label>
 					<input id="filesToIgnore" name="filesToIgnore">
 				</div>
