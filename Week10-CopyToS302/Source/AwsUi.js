@@ -1,130 +1,161 @@
-define(['jquery', 'jqm'], function() {'use strict';
+define([ 'jquery', 'jqm' ], function() {
+	'use strict';
 
-    var buttons = null;
-    var options = null;
-    var transformOptions = null;
-    var dataIndex = 0;
-    var dataIndexTransform = 0;
+	var buttons = null;
+	var options = null;
+	var transformOptions = null;
+	var dataIndex = 0;
+	var dataIndexTransform = 0;
 
-    function AwsUi() {
-        $("#listBuckets").click(listBuckets);
-        $("#copyToS3").click(copyToS3);
-        $("#getOptions").click(getOptions);
-        $("#transformForwardButton").click(forwardTransform);
-        $("#tranformBackButton").click(backwardTransform);
-        $("#forwardButton").click(forward);
-        $("#backButton").click(backward);
+	function AwsUi() {
+		$("#listBuckets").click(listBuckets);
+		$("#copyToS3").click(copyToS3);
+		$("#getOptions").click(getOptions);
+		$("#transformForwardButton").click(forwardTransform);
+		$("#tranformBackButton").click(backwardTransform);
+		$("#forwardButton").click(forward);
+		$("#backButton").click(backward);
 
-        $("#buildAll").click(buildAll);
-        getBuildConfig();
-        getOptions();
-    }
+		$("#buildAll").click(buildAll);
 
-    var buildAll = function() {
-        $.getJSON("/buildAll", {
-            options : JSON.stringify(transformOptions),
-            index : dataIndexTransform
-        }, function(result) {
-            $("#buildData").empty();
-            var fileArray = result.data.split("\n");
-            for (var i = 0; i < fileArray.length; i++) {
-                if (fileArray[i].length > 0) {
-                    $("#buildData").append("<li>" + fileArray[i] + "</li>");
-                }
-            }
-        });
-    };
+		$("#pathToPython").change(updateHandler);
+		$("#copyFrom").change(updateHandler);
+		$("#copyTo").change(updateHandler);
+		$("#filesToCopy").change(updateHandler);
 
-    var copyToS3 = function() {
-        $.getJSON("/copyToS3", {
-            options : JSON.stringify(options[dataIndex])
-        }, function(data) {
-            $("#copyResult").html("Result: " + data.result);
-        });
-    };
+		getBuildConfig();
+		getOptions();
+	}
 
-    var displayTransformConfig = function(options) {
-        $("#pathToPython").html(options.pathToPython);
-        $("#copyFrom").html(options.copyFrom);
-        $("#copyTo").html(options.copyTo);
-        $("#filesToCopy").html(options.filesToCopy);
-    };
+	var updateHandler = function(event) {
+		console.log("updateHandler called with event:");
+		console.log(event);
+		console.log("$(this).attr('id'):");
+		var id = $(this).attr('id');
+		console.log(id);
+		console.log("$(this).val():");
+		var newValue = $(this).val();
+		console.log(newValue);
+		if (transformOptions) {
+			console.log("Old transformOptions value:",
+					transformOptions[dataIndexTransform][id]);
+			if (id === "filesToCopy") {
+				// Array data must be built from the string
+				transformOptions[dataIndexTransform][id] = newValue.split(",");
+			} else {
+				transformOptions[dataIndexTransform][id] = newValue;
+			}
+			console.log("Newly set transformOptions value:",
+					transformOptions[dataIndexTransform][id]);
+		}
+	};
 
-    var displayOptions = function(options) {
-        $("#currentDocument").html(dataIndex + 1);
-        $("#pathToConfig").html(options.pathToConfig);
-        $("#reallyWrite").html(options.reallyWrite ? "true" : "false");
-        $("#bucketName").html(options.bucketName);
-        $("#folderToWalk").html(options.folderToWalk);
-        $("#s3RootFolder").html(options.s3RootFolder);
-        $("#createFolderToWalkOnS3").html(options.createFolderToWalkOnS3 ? "true" : "false");
-        $("#createIndex").html(options.createIndex ? "true" : "false");
-        $("#filesToIgnore").html(options.filesToIgnore);
-    };
+	var buildAll = function() {
+		console.log("buildAll called in AwsUI");
+		$.getJSON("/buildAll", {
+			options : JSON.stringify(transformOptions),
+			index : dataIndexTransform
+		}, function(result) {
+			$("#buildData").empty();
+			var fileArray = result.data.split("\n");
+			for ( var i = 0; i < fileArray.length; i++) {
+				if (fileArray[i].length > 0) {
+					$("#buildData").append("<li>" + fileArray[i] + "</li>");
+				}
+			}
+		});
+	};
 
-    var getBuildConfig = function() {
-        $.getJSON("/getBuildConfig", function(optionsInit) {
-            transformOptions = optionsInit;
-            displayTransformConfig(transformOptions[dataIndexTransform]);
-        }).fail(function(a) {
-            alert(JSON.stringify(a));
-        });
-    };
-    var getOptions = function() {
-        $.getJSON("/getOptions", function(optionsInit) {
-            options = optionsInit;
-            $('#documentCount').html(options.length);
-            displayOptions(options[0]);
-        }).fail(function(a) {
-            alert(JSON.stringify(a));
-        });
-    };
+	var copyToS3 = function() {
+		$.getJSON("/copyToS3", {
+			options : JSON.stringify(options[dataIndex])
+		}, function(data) {
+			$("#copyResult").html("Result: " + data.result);
+		});
+	};
 
-    var forwardTransform = function() {
-        if (dataIndexTransform < transformOptions.length - 1) {
-            dataIndexTransform++;
-            displayTransformConfig(transformOptions[dataIndexTransform]);
-        }
-    };
+	var displayTransformConfig = function(options) {
+		$("#pathToPython").val(options.pathToPython);
+		$("#copyFrom").val(options.copyFrom);
+		$("#copyTo").val(options.copyTo);
+		$("#filesToCopy").val(options.filesToCopy);
+	};
 
-    var backwardTransform = function() {
-        if (dataIndexTransform > 0) {
-            dataIndexTransform--;
-            displayTransformConfig(transformOptions[dataIndexTransform]);
-            return dataIndexTransform;
-        }
-        return dataIndexTransform;
-    };
+	var displayOptions = function(options) {
+		$("#currentDocument").val(dataIndex + 1);
+		$("#pathToConfig").val(options.pathToConfig);
+		$("#reallyWrite").val(options.reallyWrite ? "true" : "false");
+		$("#bucketName").val(options.bucketName);
+		$("#folderToWalk").val(options.folderToWalk);
+		$("#s3RootFolder").val(options.s3RootFolder);
+		$("#createFolderToWalkOnS3").val(
+				options.createFolderToWalkOnS3 ? "true" : "false");
+		$("#createIndex").val(options.createIndex ? "true" : "false");
+		$("#filesToIgnore").val(options.filesToIgnore);
+	};
 
-    var forward = function() {
-        if (dataIndex < options.length - 1) {
-            dataIndex++;
-            displayOptions(options[dataIndex]);
-        }
-    };
+	var getBuildConfig = function() {
+		$.getJSON("/getBuildConfig", function(optionsInit) {
+			transformOptions = optionsInit;
+			displayTransformConfig(transformOptions[dataIndexTransform]);
+		}).fail(function(a) {
+			alert(JSON.stringify(a));
+		});
+	};
+	var getOptions = function() {
+		$.getJSON("/getOptions", function(optionsInit) {
+			options = optionsInit;
+			$('#documentCount').val(options.length);
+			displayOptions(options[0]);
+		}).fail(function(a) {
+			alert(JSON.stringify(a));
+		});
+	};
 
-    var backward = function() {
-        if (dataIndex > 0) {
-            dataIndex--;
-            displayOptions(options[dataIndex]);
-            return true;
-        }
-        return false;
-    };
+	var forwardTransform = function() {
+		if (dataIndexTransform < transformOptions.length - 1) {
+			dataIndexTransform++;
+			displayTransformConfig(transformOptions[dataIndexTransform]);
+		}
+	};
 
-    var listBuckets = function() {
-        $.getJSON("/listBuckets", {
-            options : JSON.stringify(options[dataIndex])
-        }, function(data) {
-            for (var i = 0; i < data.length; i++) {
-                $("#buckets").append("<li>" + data[i] + "</li>");
-            }
-        });
-    };
+	var backwardTransform = function() {
+		if (dataIndexTransform > 0) {
+			dataIndexTransform--;
+			displayTransformConfig(transformOptions[dataIndexTransform]);
+			return dataIndexTransform;
+		}
+		return dataIndexTransform;
+	};
 
-    return AwsUi;
+	var forward = function() {
+		if (dataIndex < options.length - 1) {
+			dataIndex++;
+			displayOptions(options[dataIndex]);
+		}
+	};
+
+	var backward = function() {
+		if (dataIndex > 0) {
+			dataIndex--;
+			displayOptions(options[dataIndex]);
+			return true;
+		}
+		return false;
+	};
+
+	var listBuckets = function() {
+		$.getJSON("/listBuckets", {
+			options : JSON.stringify(options[dataIndex])
+		}, function(data) {
+			for ( var i = 0; i < data.length; i++) {
+				$("#buckets").append("<li>" + data[i] + "</li>");
+			}
+		});
+	};
+
+	return AwsUi;
 });
 /*
- $(document).ready(function() { 'use strict';
- new AwsUi();
- }); */
+ * $(document).ready(function() { 'use strict'; new AwsUi(); });
+ */
