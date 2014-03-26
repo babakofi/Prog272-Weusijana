@@ -1,73 +1,134 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>CopyToS3</title>
-        <link rel="shortcut icon" href="favicon16.png">
-        <link rel="stylesheet" href="/stylesheets/style.css">
-        <script data-main="Main" src="require.js"> </script>
-        <!-- script src="jquery-2.1.0.js"></script>
-        <script src="AwsUi.js"></script -->
-    </head>
-    <body>
-        <h1>CopyToS3</h1>        
-        <p>Welcome to CopyToS3</p>
-        <div>
-        <img src="Bar02.png">
-        </div>
-        <button id="buildAll">Transform and copy</button>
-        <button id="tranformBackButton">&lt;&lt;</button>
-        <button id="transformForwardButton">&gt;&gt;</button>
-        <p id="copyResultA"></p>
-        <div class="displayKing">
-            <label for="pathToPython">Path to Python</label>
-            <p id="pathToPython">-</p>
-            <label for="copyFrom">Copy from</label>
-            <p id="copyFrom">-</p>
-            <label for="copyTo">Copy to</label>
-            <p id="copyTo">-</p>
-            <label for="filesToCopy">Files to copy</label>
-            <p id="filesToCopy">-</p>
-        </div>        
-        <div>
-        <img src="Bar02.png">
-        </div>
-        <button id="listBuckets">Get Buckets</button>
-        <button id="copyToS3"> Copy to S3 </button>
-        <button id="getOptions"> Get Options </button>
-        <button id="backButton"> &lt;&lt; </button>
-        <button id="forwardButton"> &gt;&gt; </button>
-        <ul id="buckets"></ul>
-        
-        
-        <div class="displayKing">
-            <label for="documentCount">Document Count</label>
-            <p id="documentCount">-</p>
-            <label for="currentDocument">Current Document</label>
-            <p id="currentDocument">-</p>
-            <label for="pathToConfig">pathToConfig</label>
-            <p id="pathToConfig">-</p>
-            <label for="reallyWrite">reallyWrite</label>
-            <p id="reallyWrite">-</p>
-            <label for="bucketName">bucketName</label>
-            <p id="bucketName">-</p>
-            <label for="folderToWalk">folderToWalk</label>
-            <p id="folderToWalk">-</p>
-            <label for="s3RootFolder">s3RootFolder</label>
-            <p id="s3RootFolder">-</p>
-            <label for="createFolderToWalkOnS3">createFolderToWalkOnS3</label>
-            <p id="createFolderToWalkOnS3">-</p>
-            <label for="createIndex">createIndex</label>
-            <p id="createIndex">-</p>
-            <label for="filesToIgnore">filesToIgnore</label>
-            <p id="filesToIgnore">-</p>
-        </div>
-        <div>
-        <img src="Bar02.png">
-        </div>
-        <div class="displayKing">            
-            <h2>Files Copied</h2>
-            <ul id="buildData">
-            </ul>
-        </div>
-    </body>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>CopyToS3</title>
+		<meta name="description" content="WebApp for editing and uploading sonnets.">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="favicon16.png">
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link rel="stylesheet" href="/stylesheets/jquery.mobile-1.4.2/jquery.mobile-1.4.2.css">
+		<script data-main="Main" src="require.js"></script>
+		<!-- script src="jquery-2.1.0.js"></script>
+		<script src="AwsUi.js"></script -->
+	</head>
+	<body>
+		<!--[if lt IE 8]>
+		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+		<!-- Add your site or application content here -->
+		<div data-role="page" id="homepage">
+			<div data-role="header">
+				<h1>CopyToS3</h1>
+			</div>
+			<div data-role="content" id="main_content">
+				<p>
+					Welcome to CopyToS3
+				</p>
+				<div>
+					<img src="Bar02.png">
+				</div>
+				<button id="buildAll">
+					Transform and copy
+				</button>
+				<button id="tranformBackButton">
+					&lt;&lt;
+				</button>
+				<button id="transformForwardButton">
+					&gt;&gt;
+				</button>
+				<p id="copyResultA"></p>
+				<div class="displayKing">
+					<label for="pathToPython">Path to Python</label>
+					<p id="pathToPython">
+						-
+					</p>
+					<label for="copyFrom">Copy from</label>
+					<p id="copyFrom">
+						-
+					</p>
+					<label for="copyTo">Copy to</label>
+					<p id="copyTo">
+						-
+					</p>
+					<label for="filesToCopy">Files to copy</label>
+					<p id="filesToCopy">
+						-
+					</p>
+				</div>
+				<div>
+					<img src="Bar02.png">
+				</div>
+				<button id="listBuckets">
+					Get Buckets
+				</button>
+				<button id="copyToS3">
+					Copy to S3
+				</button>
+				<button id="getOptions">
+					Get Options
+				</button>
+				<button id="backButton">
+					&lt;&lt;
+				</button>
+				<button id="forwardButton">
+					&gt;&gt;
+				</button>
+				<ul id="buckets"></ul>
+
+				<div class="displayKing">
+					<label for="documentCount">Document Count</label>
+					<p id="documentCount">
+						-
+					</p>
+					<label for="currentDocument">Current Document</label>
+					<p id="currentDocument">
+						-
+					</p>
+					<label for="pathToConfig">pathToConfig</label>
+					<p id="pathToConfig">
+						-
+					</p>
+					<label for="reallyWrite">reallyWrite</label>
+					<p id="reallyWrite">
+						-
+					</p>
+					<label for="bucketName">bucketName</label>
+					<p id="bucketName">
+						-
+					</p>
+					<label for="folderToWalk">folderToWalk</label>
+					<p id="folderToWalk">
+						-
+					</p>
+					<label for="s3RootFolder">s3RootFolder</label>
+					<p id="s3RootFolder">
+						-
+					</p>
+					<label for="createFolderToWalkOnS3">createFolderToWalkOnS3</label>
+					<p id="createFolderToWalkOnS3">
+						-
+					</p>
+					<label for="createIndex">createIndex</label>
+					<p id="createIndex">
+						-
+					</p>
+					<label for="filesToIgnore">filesToIgnore</label>
+					<p id="filesToIgnore">
+						-
+					</p>
+				</div>
+				<div>
+					<img src="Bar02.png">
+				</div>
+				<div class="displayKing">
+					<h2>Files Copied</h2>
+					<ul id="buildData"></ul>
+				</div>
+			</div>
+			<div data-role="footer">
+				Copyright 2014, Baba Kofi Weusijana, All Rights Reserved
+			</div>
+	</body>
 </html>

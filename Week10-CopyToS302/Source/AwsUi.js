@@ -1,4 +1,4 @@
-define(['jquery'], function() {'use strict';
+define(['jquery', 'jqm'], function() {'use strict';
 
     var buttons = null;
     var options = null;
