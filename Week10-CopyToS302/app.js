@@ -80,12 +80,12 @@ app.get('/getOptions', function(request, response) {
 		console.log(e);
 		console.log("options === null, try reading from cloud db...");
 		var query = {
-			"name" : "Options"
+			"id" : "1395883607551"
 		};
 		console.log("query is a:", typeof query);
 		console.log("query:");
 		console.log(query);
-//		request.query = query;
+		// request.query = query;
 		try {
 			queryMongo.getCollectionData(response, query, collectionName);
 		} catch (queryErr) {
@@ -185,6 +185,22 @@ function readAndInsertConfig(response, filename) {
 		}
 	});
 }
+
+app.post('/upsert', function(request, response) {
+	'use strict';
+	console.log("inside callback for app.post('/upsert', callback)");
+	if (request.body) {
+		console.log("request.body:");
+		console.log(request.body);
+		var configData = request.body;
+
+		if (!(configData.id)) {
+			// First time saving data to cloud database, set it's unique id
+			configData.id = String((new Date()).getTime());
+		}
+		queryMongo.upsert(response, collectionName, configData);
+	}
+});
 
 app.get('/insertConfig', function(request, response) {
 	'use strict';

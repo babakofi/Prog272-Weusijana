@@ -89,7 +89,8 @@ var QueryMongo = (function() {
 		console.log("collectionName is " + collectionName);
 		var response = initResponse;
 
-		getDatabase(response, collectionName, function(response, collectionName, database) {
+		getDatabase(response, collectionName, function(response,
+				collectionName, database) {
 			console.log("In getCollectionProject callback: " + collectionName);
 
 			var collection = collectionList.getCollectionByName(database,
@@ -135,6 +136,46 @@ var QueryMongo = (function() {
 				});
 			}
 
+		});
+	};
+
+	// Will create collection if it does not exist
+	QueryMongo.prototype.upsert = function(response, collectionName,
+			objectToUpsert) {
+		message("QueryMongo.insertIntoCollection called: " + collectionName);
+		console.log(objectToUpsert);
+		getDatabase(response, collectionName, function(response,
+				collectionName, database) {
+			if (database) {
+				var collection = database.collection(collectionName);
+				// Update the document using an upsert operation, ensuring
+				// creation
+				// if it does not exist
+				// An "id" field is necessary to find and update the correct
+				// record
+				collection.update({
+					"id" : objectToUpsert.id
+				}, objectToUpsert, {
+					upsert : true,
+					w : 1
+				}, function(err, result) {
+					if (err) {
+						console.log("err:", err);
+					}
+					if ((result) && (result == 1)) {
+						// Return the collection to the response as JSON
+						collection.find({
+							"id" : objectToUpsert.id
+						}).toArray(function(err, results) {
+							console.log("typeof results:", typeof results[0]);
+							console.dir(results[0]);
+							response.json(results[0]);
+						});
+					} else {
+						console.log("result:", result);
+					}
+				});
+			}
 		});
 	};
 

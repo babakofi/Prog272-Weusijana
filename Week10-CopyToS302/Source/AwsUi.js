@@ -81,6 +81,7 @@ define([ 'jquery', 'jqm' ], function() {
 			}
 			console.log("Newly set transformOptions value:",
 					transformOptions[dataIndexTransform][id]);
+			updateOnServer(transformOptions[dataIndexTransform]);
 		}
 	};
 
@@ -100,8 +101,8 @@ define([ 'jquery', 'jqm' ], function() {
 		console.log("$(this).val():");
 		var newValue = $(this).val();
 		console.log(newValue);
-		if (options) {
-			console.log("Old options value:", options[id]);
+		if (options[dataIndex]) {
+			console.log("Old options[dataIndex] value:", options[dataIndex][id]);
 			switch (id) {
 			case "currentDocument":
 				if (!isNaN(newValue)) {
@@ -112,26 +113,27 @@ define([ 'jquery', 'jqm' ], function() {
 				newValue = ($(this).prop("checked"));
 				console.log("typeof newValue:", typeof newValue);
 				console.log("newValue:", newValue);
-				options[id] = newValue;
+				options[dataIndex][id] = newValue;
 				break;
 			case "createFolderToWalkOnS3":
 				newValue = ($(this).prop("checked"));
 				console.log("newValue:", newValue);
-				options[id] = newValue;
+				options[dataIndex][id] = newValue;
 				break;
 			case "createIndex":
 				newValue = ($(this).prop("checked"));
 				console.log("newValue:", newValue);
-				options[id] = newValue;
+				options[dataIndex][id] = newValue;
 				break;
 			case "filesToIgnore":
 				// Array data must be built from the string
-				options[id] = newValue.split(",");
+				options[dataIndex][id] = newValue.split(",");
 				break;
 			default:
-				options[id] = newValue;
+				options[dataIndex][id] = newValue;
 			}
-			console.log("Newly set options value:", options[id]);
+			console.log("Newly set options[dataIndex] value:", options[dataIndex][id]);
+			updateOnServer(options[dataIndex]);
 		}
 	};
 
@@ -209,6 +211,16 @@ define([ 'jquery', 'jqm' ], function() {
 				$("#buckets").append("<li>" + data[i] + "</li>");
 			}
 		});
+	};
+
+	var updateOnServer = function(configData) {
+		$.post("/upsert", configData,
+				function(responseData, textStatus, jqXHR) {
+					console.log("updateOnServer's /upsert textStatus:");
+					console.log(textStatus);
+					console.log("updateOnServer's /upsert responseData:");
+					console.log(responseData);
+				}, "json");
 	};
 
 	return AwsUi;
