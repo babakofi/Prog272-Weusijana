@@ -1,0 +1,32 @@
+body {
+  /*padding: 50px;*/
+  font: 1em "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/*.displayKing label {	
+	display: inline-block;
+	padding: 2px;	
+	width: 30%;
+	text-align: right;
+}*/
+
+.displayKing {
+	overflow: auto;	
+	border: solid black 1px;
+	background-color: #00DDAA;	
+	width: 100%;
+	padding: 5px;
+}
+
+.displayKing input {
+	/*display: inline-block;
+	padding-left: 3px;
+	width:65%;*/    
+	border: solid black 1px;
+	background-color: #00BBFF;
+	/*margin: 1%;*/
+}

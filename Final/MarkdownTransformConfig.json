@@ -1,0 +1,8 @@
+[
+	{
+		"pathToPython": "/usr/bin/python3.3",
+		"copyFrom": "/home/kofi/Documents/BellevueCollege/MobileSolutions/Dropbox/bc",
+		"copyTo": "/var/www/bc",
+		"filesToCopy": ["sonnet1","sonnet2","sonnet3","sonnet4","sonnet5","sonnet6"]
+	}
+]
