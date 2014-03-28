@@ -1,4 +1,4 @@
-CopyToS3
+Final
 ==========
 
 An example of how to use Node JS to upload files to S3.
